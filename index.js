@@ -97,6 +97,24 @@ app.post("/books/:id", (req, res) => {
     }
 });
 
+app.post("/todos/:id", (req, res) => {
+    const todoId = parseInt(req.params.id);
+    const updatedTodo = req.body;
+    const todoToUpdate = todos.find((todo) => todo.id === todoId);
+
+    if(!todoToUpdate){
+        res.status(404).json({ error: "Todo does not exist" });
+
+    } else {
+        if(!updatedTodo.title || !updatedTodo.day) {
+            res.status(400).json({ error: "Title and day are required" });
+        } else {
+            Object.assign(todoToUpdate, updatedTodo);
+            res.status(200).json({ message: "Todo updated successfully", todo: updatedTodo }); 
+        }         
+    }
+});
+
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
