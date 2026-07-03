@@ -82,7 +82,7 @@ app.delete("/books/:id", (req, res) => {
 app.post("/books/:id", (req, res) => {
     const bookId = parseInt(req.params.id);
     const updatedBook = req.body;
-    const bookToUpdate = books.findIndex((book) => book.id === bookId);
+    const bookToUpdate = books.find((book) => book.id === bookId);
 
     if(!bookToUpdate){
         res.status(404).json({ error: "Book not found" });
